@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Url Shortner</title>
+
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  
+<style>
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  text-decoration: none;
+  min-height: 100vh;
+  font-family: "Lato", sans-serif;
+  line-height: 1.5;
+  color: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.container{
+  text-align: center;
+  padding: 10px;
+  width: 520px;
+  height: 320px;
+  border: 2.5px solid #330867;
+  border-radius: 2.5px;
+  box-shadow: 0 10px 20px rgba(17, 17, 17, 0.125),
+  0 5px 5px rgba(255, 149, 0, 0.25);
+  background:rgb(252, 153, 13);
+  border-radius: 15px;
+}
+
+input{
+  box-sizing: border-box;
+  width: 70%;  
+  padding: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 5px solid black;
+  color: black;
+}
+
+
+button{
+  background-color: rgb(3, 1, 0);
+  color: #fff;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid white;
+}
+
+button:hover{
+  background-color: rgb(132, 0, 255);
+  border: 3px solid black ;
+  color:black;
+  font-weight: 900;
+}
+
+section {
+margin-top: 20px ;
+min-height: 60px;
+text-align: center;
+background-color: white;
+border-radius: 5px  ;
+}
+</style>
+
+
+
+
+
+
+
+  <div class="container" >
+    <h1>URL Shortner</h1>
+    <form id="post-form" method="POST">
+      {% csrf_token %}
+    <input type="text" name="link" id="link" placeholder="Enter URL here" required>
+    <div class="buttons">
+      <button type="submit" id="link">Short Your Link</button>
+    </div>
+    </form>
+    
+    <section id="section"><i>Your Sorted Url 👇 </i><h2 id="shortUrl"></h2></section>
+    <!-- <button class ="copy">Copy</button> -->
+  </div>
+
+
+
+
+</body>
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/create',
+      data:{
+        link:$('#link').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        $('h2').html("localhost:8000/"+data)
+      }
+    });
+  });
+
+
+
+
+
+</script>
+</html>
